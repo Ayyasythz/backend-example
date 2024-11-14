@@ -1,0 +1,365 @@
+basePath: /
+definitions:
+  controller.errorResponse:
+    properties:
+      error_code:
+        type: integer
+      error_message:
+        type: string
+    type: object
+  controller.jsonResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      error:
+        $ref: '#/definitions/controller.errorResponse'
+      message:
+        type: string
+    type: object
+  request.WardrobeAddSubRequest:
+    properties:
+      amount:
+        type: integer
+    type: object
+  request.WardrobeInsertRequest:
+    properties:
+      color:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      size:
+        type: string
+      stock:
+        type: integer
+    type: object
+  request.WardrobeUpdateRequest:
+    properties:
+      color:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      size:
+        type: string
+      stock:
+        type: integer
+    type: object
+  response.WardrobeResponse:
+    properties:
+      color:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      size:
+        type: string
+      stock:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: Wardrobe System Service.
+  title: Wardrobe Service
+  version: 1.0.0
+paths:
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Ping to check health
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.jsonResponse'
+      summary: Ping
+      tags:
+      - Health
+  /v1/wardrobe:
+    get:
+      consumes:
+      - application/json
+      description: Get All Wardrobe
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.jsonResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.WardrobeResponse'
+              type: object
+      summary: Get All Wardrobe
+      tags:
+      - wardrobes
+    post:
+      consumes:
+      - application/json
+      description: Insert Wardrobe
+      parameters:
+      - description: Insert Payload
+        in: body
+        name: wardrobes
+        required: true
+        schema:
+          $ref: '#/definitions/request.WardrobeInsertRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.jsonResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.WardrobeResponse'
+              type: object
+      summary: Insert Wardrobe
+      tags:
+      - wardrobes
+  /v1/wardrobe/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Wardrobe
+      parameters:
+      - description: wardrobe id
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.jsonResponse'
+      summary: Delete Wardrobe By ID
+      tags:
+      - wardrobes
+    get:
+      consumes:
+      - application/json
+      description: Get Wardrobe
+      parameters:
+      - description: wardrobe id
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.jsonResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.WardrobeResponse'
+              type: object
+      summary: Get Wardrobe By ID
+      tags:
+      - wardrobes
+    put:
+      consumes:
+      - application/json
+      description: Update Wardrobe
+      parameters:
+      - description: Update Payload
+        in: body
+        name: wardrobes
+        required: true
+        schema:
+          $ref: '#/definitions/request.WardrobeUpdateRequest'
+      - description: wardrobe id
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.jsonResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.WardrobeResponse'
+              type: object
+      summary: Update Wardrobe
+      tags:
+      - wardrobes
+  /v1/wardrobe/{id}/addStock:
+    put:
+      consumes:
+      - application/json
+      description: AddStock Wardrobe
+      parameters:
+      - description: WardrobeAddSubRequest Payload
+        in: body
+        name: wardrobes
+        required: true
+        schema:
+          $ref: '#/definitions/request.WardrobeAddSubRequest'
+      - description: wardrobe id
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.jsonResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.WardrobeResponse'
+              type: object
+      summary: AddStock Wardrobe
+      tags:
+      - wardrobes
+  /v1/wardrobe/{id}/subStock:
+    put:
+      consumes:
+      - application/json
+      description: SubStock Wardrobe
+      parameters:
+      - description: WardrobeAddSubRequest Payload
+        in: body
+        name: wardrobes
+        required: true
+        schema:
+          $ref: '#/definitions/request.WardrobeAddSubRequest'
+      - description: wardrobe id
+        in: path
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.jsonResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.WardrobeResponse'
+              type: object
+      summary: SubStock Wardrobe
+      tags:
+      - wardrobes
+  /v1/wardrobe/less:
+    get:
+      consumes:
+      - application/json
+      description: Get LessThan Wardrobe
+      parameters:
+      - description: amount of the wardrobe
+        in: query
+        name: amount
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.jsonResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.WardrobeResponse'
+              type: object
+      summary: Get LessThan Wardrobe
+      tags:
+      - wardrobes
+  /v1/wardrobe/out:
+    get:
+      consumes:
+      - application/json
+      description: Get Unavailable Wardrobe
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.jsonResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.WardrobeResponse'
+              type: object
+      summary: Get UnavailableWardrobe
+      tags:
+      - wardrobes
+  /v1/wardrobe/ready:
+    get:
+      consumes:
+      - application/json
+      description: Get Available Wardrobe
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.jsonResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.WardrobeResponse'
+              type: object
+      summary: Get Available Wardrobe
+      tags:
+      - wardrobes
+  /v1/wardrobe/search:
+    get:
+      consumes:
+      - application/json
+      description: Search Wardrobe by color and/or size
+      parameters:
+      - description: Color of the wardrobe
+        in: query
+        name: color
+        type: string
+      - description: Size of the wardrobe
+        in: query
+        name: size
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/controller.jsonResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.WardrobeResponse'
+                  type: array
+              type: object
+      summary: Search Wardrobe
+      tags:
+      - wardrobes
+swagger: "2.0"

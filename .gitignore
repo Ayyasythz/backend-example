@@ -1,0 +1,6 @@
+# IDE
+.idea/
+.vscode/
+
+# Local config
+config/files/config.yaml

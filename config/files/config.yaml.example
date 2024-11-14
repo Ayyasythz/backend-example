@@ -1,0 +1,17 @@
+Server:
+  Port: 8900
+  ReadTimeout: 15s
+  WriteTimeout: 15s
+
+API:
+  BasePath: ""
+  APITimeout: 15s
+  EnableSwagger: true
+
+Database:
+  SlaveDSN: "postgres://[user]:[password]@[host]:[port]/[dbname]?sslmode=disable"
+  MasterDSN: "postgres://[user]:[password]@[host]:[port]/[dbname]?sslmode=disable"
+  RetryInterval: 10
+  MaxIdleConn: 10
+  MaxConn: 10
+  ConnMaxLifetime: 10s
